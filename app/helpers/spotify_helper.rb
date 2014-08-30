@@ -13,8 +13,6 @@ module SpotifyHelper
 
     body = JSON.parse(results.body)
     albums = body["albums"]["items"]
-    names = albums.map do |i|
-      i["name"]
-    end
+    names = albums.map {|i| i["name"]}
   end
 end
