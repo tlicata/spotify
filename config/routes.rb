@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  root 'session#index'
+
+  get 'session/index'
+  get 'session/login', as: 'login'
+  get 'session/callback'
+  post 'session/logout'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
