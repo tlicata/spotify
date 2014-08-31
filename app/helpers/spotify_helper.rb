@@ -4,32 +4,39 @@ require "typhoeus"
 module SpotifyHelper
   BASE_URL = "https://api.spotify.com/v1/"
 
+  def SpotifyHelper.request(url, params, access, refresh)
+    params ||= {}
+    params[:json] = true
+    headers = {}
+    if access
+      headers["Authorization"] = "Bearer #{access}"
+    end
+    response = Typhoeus.get(url, headers: headers, params: params)
+    body = JSON.parse(response.body)
 
-  def SpotifyHelper.get_user_profile(user)
-    response = Typhoeus.get(BASE_URL + "users/" + user,
-                            params: {json: true})
-    JSON.parse(response.body)
+    if body["error"]
+      if refresh and body["error"]["message"] == "The access token expired"
+        body = SpotifyHelper.refresh_token(access, refresh)
+      end
+    end
+
+    body
   end
 
-  def SpotifyHelper.get_user_playlists(user, token)
+  def SpotifyHelper.get_user_profile(user)
+    SpotifyHelper.request(BASE_URL + "users/" + user, nil, nil, nil)
+  end
+
+  def SpotifyHelper.get_user_playlists(user, access, refresh)
     url = "#{BASE_URL}users/#{user}/playlists"
-    headers = {}
-    if token
-      headers["Authorization"] = "Bearer #{token}"
-    end
-    response = Typhoeus.get(url,
-                            headers: headers,
-                            params: {json: true})
-    JSON.parse(response.body)
+    SpotifyHelper.request(url, nil, access, refresh)
   end
 
   def SpotifyHelper.search_for(query, type)
-    results = Typhoeus.get(BASE_URL + "search/",
-                           :params => {
-                             :q => query,
-                             :type => type
-                           })
-    body = JSON.parse(results.body)
+    body = SpotifyHelper.request(BASE_URL + "search/", {
+                                   :q => query,
+                                   :type => type
+                                 }, nil, nil)
     items = body[type+"s"]["items"]
     names = items.map {|i| i["name"]}
   end

@@ -44,6 +44,7 @@ class SessionController < ApplicationController
       @user = JSON.parse(response.body)
 
       session[:access_token] = @access_token
+      session[:refresh_token] = @refresh_token
     end
   end
 end
