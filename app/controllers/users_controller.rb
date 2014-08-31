@@ -1,6 +1,6 @@
 require_relative '../helpers/spotify_helper.rb'
 
-class UsersController < ApplicationController
+class UsersController < SpotifyController
   def show
     access = session[:access_token]
     refresh = session[:refresh_token]

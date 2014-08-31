@@ -1,4 +1,4 @@
-class SessionController < ApplicationController
+class SessionController < SpotifyController
   def index
   end
 
