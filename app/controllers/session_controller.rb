@@ -44,7 +44,4 @@ class SessionController < ApplicationController
       @user = JSON.parse(response.body)
     end
   end
-
-  def logout
-  end
 end
