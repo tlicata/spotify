@@ -5,6 +5,12 @@ module SpotifyHelper
   BASE_URL = "https://api.spotify.com/v1/"
 
 
+  def SpotifyHelper.get_user_profile(user)
+    response = Typhoeus.get(BASE_URL + "users/" + user,
+                            params: {json: true})
+    JSON.parse(response.body)
+  end
+
   def SpotifyHelper.search_for(query, type)
     results = Typhoeus.get(BASE_URL + "search/",
                            :params => {
