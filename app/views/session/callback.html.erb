@@ -1,10 +1,12 @@
-<h1>called back</h1>
+<% if @error %>
+  <h1>Error logging in: <%= @error %></h1>
+<% else %>
+  <% if @user["display_name"] %>
+  <h1>Logged in as <%=@user["display_name"]%></h1>
+  <% else %>
+  <h1>Logged in as <%=@user["email"]%></h1>
+  <% end %>
 
-<p>access_token: <%= @access_token %></p>
-<p>token_type: <%= @token_type %></p>
-<p>expires_in: <%= @expires_in %></p>
-<p>refresh_token: <%= @refresh_token %></p>
-
-<p>body: <%= @body %></p>
-
-<p>me: <%= @me %></p>
+  <p>access_token: <%= @access_token %></p>
+  <p>refresh_token: <%= @refresh_token %></p>
+<% end %>

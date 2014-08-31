@@ -30,17 +30,19 @@ class SessionController < ApplicationController
                              body: search,
                              params: {json: true})
 
-    @body = JSON.parse(response.body)
-    @access_token = @body["access_token"]
-    @token_type = @body["token_type"]
-    @expires_in = @body["expires_in"]
-    @refresh_token = @body["refresh_token"]
+    body = JSON.parse(response.body)
 
-    response = Typhoeus.get('https://api.spotify.com/v1/me',
-                            headers: {Authorization: "Bearer #{@access_token}"},
-                            params: {json: true})
+    if body["error"]
+      @error = body["error"]
+    else
+      @access_token = body["access_token"]
+      @refresh_token = body["refresh_token"]
+      response = Typhoeus.get('https://api.spotify.com/v1/me',
+                              headers: {Authorization: "Bearer #{@access_token}"},
+                              params: {json: true})
 
-    @me = JSON.parse(response.body)
+      @user = JSON.parse(response.body)
+    end
   end
 
   def logout
