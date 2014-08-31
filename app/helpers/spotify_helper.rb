@@ -11,6 +11,18 @@ module SpotifyHelper
     JSON.parse(response.body)
   end
 
+  def SpotifyHelper.get_user_playlists(user, token)
+    url = "#{BASE_URL}users/#{user}/playlists"
+    headers = {}
+    if token
+      headers["Authorization"] = "Bearer #{token}"
+    end
+    response = Typhoeus.get(url,
+                            headers: headers,
+                            params: {json: true})
+    JSON.parse(response.body)
+  end
+
   def SpotifyHelper.search_for(query, type)
     results = Typhoeus.get(BASE_URL + "search/",
                            :params => {

@@ -42,6 +42,8 @@ class SessionController < ApplicationController
                               params: {json: true})
 
       @user = JSON.parse(response.body)
+
+      session[:access_token] = @access_token
     end
   end
 end
