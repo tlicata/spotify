@@ -25,7 +25,12 @@ class SpotifyController < ApplicationController
   end
 
   def get_user_playlists(user)
-    make_request("#{BASE_URL}users/#{user}/playlists", nil)
+    make_request(playlists_url(user), nil)
+  end
+
+  def get_playlist_tracks(user, playlist)
+    base = playlists_url(user)
+    make_request("#{base}/#{playlist}/tracks", nil)
   end
 
   def search_for_album(query)
@@ -51,6 +56,9 @@ class SpotifyController < ApplicationController
                         })
     items = body[type+"s"]["items"]
     names = items.map {|i| i["name"]}
+  end
+  def playlists_url(user)
+    "#{BASE_URL}users/#{user}/playlists"
   end
   def access_token
     session[:access_token]
