@@ -41,10 +41,12 @@ class SessionController < SpotifyController
                               headers: {Authorization: "Bearer #{@access_token}"},
                               params: {json: true})
 
-      @user = JSON.parse(response.body)
+      user = JSON.parse(response.body)
 
       session[:access_token] = @access_token
       session[:refresh_token] = @refresh_token
+
+      redirect_to user_path(user["id"])
     end
   end
 end
