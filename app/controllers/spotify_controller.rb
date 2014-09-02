@@ -1,7 +1,9 @@
 class SpotifyController < ApplicationController
   BASE_URL = "https://api.spotify.com/v1/"
+  CLIENT_ID = ENV['SPOTIFY_CLIENT_ID']
+  CLIENT_SECRET = ENV['SPOTIFY_CLIENT_SECRET']
 
-  def make_request(url, params)
+  def make_request(url, params, should_retry = true)
     params ||= {}
     params[:json] = true
     headers = {}
@@ -11,9 +13,10 @@ class SpotifyController < ApplicationController
     response = Typhoeus.get(url, headers: headers, params: params)
     body = JSON.parse(response.body)
 
-    if body["error"]
+    if body["error"] and should_retry
       if refresh_token and body["error"]["message"] == "The access token expired"
         request_refresh_token
+        body = make_request(url, params, false)
       end
     end
 
@@ -51,7 +54,20 @@ class SpotifyController < ApplicationController
 
   private
   def request_refresh_token
-    # needs implementation
+    url = "https://accounts.spotify.com/api/token"
+    secret = Base64.strict_encode64(CLIENT_ID + ":" + CLIENT_SECRET)
+    search = {
+      grant_type: 'refresh_token',
+      refresh_token: session[:refresh_token]
+    }
+    headers = {Authorization: "Basic " + secret}
+    params = {json: true}
+    response = Typhoeus.post(url,
+                             body: search,
+                             headers: headers,
+                             params: params)
+    body = JSON.parse(response.body)
+    session[:access_token] = body["access_token"]
   end
   def search_for(query, type)
     body = make_request(BASE_URL + "search/", {
