@@ -3,7 +3,9 @@
 
 <h2>Tracks</h2>
 <ul>
+<%if @tracks and @tracks["items"] %>
   <% @tracks["items"].each do |item| %>
   <li><a href="<%=item['track']['preview_url']%>"><%=item['track']['name']%></a></li>
   <% end %>
+<% end %>
 </ul>
