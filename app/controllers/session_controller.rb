@@ -42,11 +42,13 @@ class SessionController < SpotifyController
                               params: {json: true})
 
       user = JSON.parse(response.body)
+      user_id = user["id"]
 
+      session[:current_user] = user_id
       session[:access_token] = @access_token
       session[:refresh_token] = @refresh_token
 
-      redirect_to user_path(user["id"])
+      redirect_to user_path(user_id)
     end
   end
 end
