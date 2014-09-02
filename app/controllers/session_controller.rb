@@ -10,7 +10,7 @@ class SessionController < SpotifyController
     search = {
       :response_type => 'code',
       :client_id => CLIENT_ID,
-      :scope => 'user-read-private user-read-email user-library-read',
+      :scope => 'user-read-private user-read-email user-library-read playlist-modify-public',
       :redirect_uri => REDIRECT_URI,
       :show_dialog => true
     }
