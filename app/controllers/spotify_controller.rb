@@ -33,6 +33,10 @@ class SpotifyController < ApplicationController
     make_request("#{base}/#{playlist}/tracks", nil)
   end
 
+  def get_user_tracks
+    make_request("#{BASE_URL}me/tracks", nil)
+  end
+
   def search_for_album(query)
     search_for(query, "album")
   end
