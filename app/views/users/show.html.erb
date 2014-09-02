@@ -3,11 +3,19 @@
 <h2>Playlists</h2>
 
 <ul>
+  <% if @playlists and @playlists["items"] %>
   <% @playlists["items"].each do |list| %>
   <li><a href="/users/<%=@user_id%>/playlists/<%=list['id']%>"><%=list["name"]%></a></li>
   <% end %>
+  <% end %>
 </ul>
+
+<% if @tracks and not @tracks.empty? %>
+<h2>Tracks</h2>
+<p><%= @tracks %></p>
+<% end %>
 
 <p> <%= @body %></p>
 
 <p> <%= @playlists %></p>
+
