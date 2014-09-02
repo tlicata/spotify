@@ -1,3 +1,9 @@
 <p>user_id: <%= @user_id %></p>
 <p>playlist_id: <%= @playlist_id %></p>
-<p>tracks: <%= @tracks %></p>
+
+<h2>Tracks</h2>
+<ul>
+  <% @tracks["items"].each do |item| %>
+  <li><a href="<%=item['track']['preview_url']%>"><%=item['track']['name']%></a></li>
+  <% end %>
+</ul>
