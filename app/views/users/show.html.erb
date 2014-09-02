@@ -1,5 +1,13 @@
 <h1>Show user <%= @user_id %></h1>
 
+<h2>Playlists</h2>
+
+<ul>
+  <% @playlists["items"].each do |list| %>
+  <li><a href="/users/<%=@user_id%>/playlists/<%=list['id']%>"><%=list["name"]%></a></li>
+  <% end %>
+</ul>
+
 <p> <%= @body %></p>
 
 <p> <%= @playlists %></p>
