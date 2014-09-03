@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'search/index'
-
   root 'session#index'
+
+  get 'search/index', as: 'search'
 
   get 'session/index'
   get 'session/login', as: 'login'
