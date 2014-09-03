@@ -7,14 +7,18 @@ window.onload = () ->
   handleSubmit = (e) ->
     e.preventDefault()
     console.log "access_token: " + access_token
+    search_type = this.type.value
     $.ajax({
         url: "https://api.spotify.com/v1/search",
         data: {
             q: this.query.value,
-            type: this.type.value
+            type: search_type
         },
         success: (data) ->
-            console.log "data: ", data
+            results = data[search_type+"s"]
+            html = HandlebarsTemplates["search/index"](results)
+            $("#results").html(html)
     })
 
   $("#search").on "submit", handleSubmit
+
