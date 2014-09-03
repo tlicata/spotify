@@ -16,9 +16,7 @@
 <h2>Albums</h2>
 <ul>
   <% @albums["items"].each do |album| %>
-    <%# if album["available_markets"].include? "US" %>
   <li><%= album["name"] %></li>
-    <%# end %>
   <% end %>
 </ul>
 
