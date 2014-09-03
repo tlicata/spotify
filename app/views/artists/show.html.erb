@@ -1,0 +1,30 @@
+<h1><%= @artist["name"] %></h1>
+
+<% images = @artist["images"] %>
+<% if images and not images.empty?%>
+  <% image = images.length > 1 ? images[1] : images[0] %>
+  <img src="<%= image['url'] %>">
+<% end %>
+
+<h2> Top Tracks</h2>
+<ul>
+  <% @top_tracks["tracks"].each do |jam| %>
+  <li><%= jam["name"] %></li>
+  <% end %>
+</ul>
+
+<h2>Albums</h2>
+<ul>
+  <% @albums["items"].each do |album| %>
+    <%# if album["available_markets"].include? "US" %>
+  <li><%= album["name"] %></li>
+    <%# end %>
+  <% end %>
+</ul>
+</ul>
+
+<p><%= @artist %></p>
+
+<p><%= @top_tracks %></p>
+
+<p><%= @albums %></p>

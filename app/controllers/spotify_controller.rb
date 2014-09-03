@@ -40,6 +40,23 @@ class SpotifyController < ApplicationController
     make_request("#{BASE_URL}me/tracks", nil)
   end
 
+  def get_artist(id)
+    make_request("#{BASE_URL}artists/#{id}", nil)
+  end
+  def get_artist_top_tracks(id)
+    params = {:country => "US"}
+    make_request("#{BASE_URL}artists/#{id}/top-tracks", params)
+  end
+
+  def get_artist_albums(id)
+    params = {
+      :album_type => "album",
+      :country => "US",
+      :limit => 30
+    }
+    make_request("#{BASE_URL}artists/#{id}/albums", params)
+  end
+
   def search_for_album(query)
     search_for(query, "album")
   end

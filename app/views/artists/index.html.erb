@@ -1,0 +1,14 @@
+<h1>Search</h1>
+
+<%= form_tag nil, id: "artist_search" do %>
+  <%= text_field_tag :query, nil, :placeholder => "Artist" %>
+  <br>
+  <%= submit_tag "Submit" %>
+<% end %>
+
+<ul id="results">
+</ul>
+
+<script type="text/javascript">
+  var access_token = "<%=@access_token%>"
+</script>
