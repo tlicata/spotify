@@ -9,7 +9,7 @@
 <h2> Top Tracks</h2>
 <ul>
   <% @top_tracks["tracks"].each do |jam| %>
-  <li><%= jam["name"] %></li>
+  <li><a href="<%=jam['preview_url']%>"><%= jam["name"] %></a></li>
   <% end %>
 </ul>
 
